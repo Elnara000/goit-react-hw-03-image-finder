@@ -26,12 +26,12 @@ class App extends Component {
   };
 
   loadMore = e => {
-    this.setState({ pageNumber: (this.state.pageNumber += 1) });
+    this.setState({ pageNumber: this.state.pageNumber + 1 });
   };
 
   render() {
     return (
-      <div>
+      <div className={css.App}>
         <Searchbar onSubmit={this.handleSearchFormSubmit} />
         <ImageGallery
           searchName={this.state.searchName}

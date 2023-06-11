@@ -2,7 +2,7 @@ import { LineWave } from 'react-loader-spinner';
 import './Loader.css';
 export default function Loader() {
   return (
-    <div className="Spinner">
+    <div className="loader">
       <LineWave
         height="100"
         width="100"
