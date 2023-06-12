@@ -20,6 +20,12 @@ export default class ImageGallery extends Component {
       this.setState({ status: 'pending' });
 
       fetchImages(this.props.searchName, this.props.page)
+        .then(value => {
+          if (value.hits < 1) {
+            return Promise.reject(new Error('No results'));
+          }
+          return value;
+        })
         .then(value =>
           this.setState({
             value: value.hits,
@@ -32,15 +38,21 @@ export default class ImageGallery extends Component {
     if (prevState.page !== this.state.page) {
       this.setState({ status: 'pending' });
       fetchImages(this.props.searchName, this.state.page)
-        .then(value =>
+        .then(value => {
+          if (value.hits < 1) {
+            return Promise.reject(new Error('No results'));
+          }
+          return value;
+        })
+        .then(value => {
           this.setState(prevState => {
             return {
               value: [...prevState.value, ...value.hits],
               status: 'resolved',
               totalHits: value.totalHits,
             };
-          })
-        )
+          });
+        })
         .catch(error => this.setState({ error, status: 'rejected' }));
     }
   }
@@ -74,7 +86,9 @@ export default class ImageGallery extends Component {
               />
             ))}
           </ul>
-          <Button onClick={this.loadMore} />
+          {this.state.value.length <= this.state.totalHits && (
+            <Button onClick={this.loadMore} />
+          )}
         </>
       );
     }
