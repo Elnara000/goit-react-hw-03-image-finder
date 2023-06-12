@@ -19,7 +19,11 @@ export default class ImageGalleryItem extends Component {
     return (
       <>
         <li className={css.ImageGalleryItem} onClick={this.openModal}>
-          <img src={this.props.webImg} alt="searchedImg" />
+          <img
+            className={css.ImageGalleryItemImage}
+            src={this.props.webImg}
+            alt="searchedImg"
+          />
         </li>
         {this.state.showModal && (
           <Modal img={this.props.lgImg} onClose={this.toggleModal} />
@@ -28,7 +32,7 @@ export default class ImageGalleryItem extends Component {
     );
   }
 }
-//width img
+
 ImageGalleryItem.propTypes = {
   webImg: PropTypes.string,
   lgImg: PropTypes.string,
